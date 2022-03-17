@@ -23,11 +23,12 @@ if os.path.isfile(f'./Cotacoes{curr_name}2022.csv'):
     dt_final = datetime.strftime(datetime.now() - timedelta(1), '%d/%m/%Y')
     cur_csvnew = f'https://ptax.bcb.gov.br{url_base}ChkMoeda={currency}&DATAINI={dt_inicio}&DATAFIM={dt_final}'
     readnewfile_df = pd.read_csv(cur_csvnew, header= None, sep= ';')
-    readfile_df = readfile_df.append(readnewfile_df)
+    #readfile_df = readfile_df.append(readnewfile_df)
+    #print(readfile_df)
+    readnewfile_df.to_csv(f'./Cotacoes{curr_name}2022.csv', mode= 'a', sep=';', index= False, header= False)
 
-    print(readfile_df)
-
-    """Próximo passo adicionar dados recentes do readnewfile_df no readfile_df e então no .csv existente CotacoesEuro2022.csv"""
+    """Próximo passo criar .csv caso ele não exista"""
+    """Passo seguinte criar 'temporizador para rodar o código todo dia após determinada hora"""
 else:
     print('File does not exist')
 
