@@ -23,9 +23,11 @@ if os.path.isfile(f'./Cotacoes{curr_name}2022.csv'):
     dt_final = datetime.strftime(datetime.now() - timedelta(1), '%d/%m/%Y')
     cur_csvnew = f'https://ptax.bcb.gov.br{url_base}ChkMoeda={currency}&DATAINI={dt_inicio}&DATAFIM={dt_final}'
     readnewfile_df = pd.read_csv(cur_csvnew, header= None, sep= ';')
-    print(readnewfile_df)
+    readfile_df = readfile_df.append(readnewfile_df)
 
-    """Buscar tail da coluna '0' adicionar 1 dia. Para isso, antes converter datas com Datetime"""
+    print(readfile_df)
+
+    """Próximo passo adicionar dados recentes do readnewfile_df no readfile_df e então no .csv existente CotacoesEuro2022.csv"""
 else:
     print('File does not exist')
 
@@ -43,6 +45,5 @@ else:
 """1- verificar se há base existente 'CotacoesEuro2022' """ """OK"""
 """2- criar base manualmente"""
 """3- rodar script todo e colar dados adicionais na base"""
-"""4- Usar datetime para converter para data (DATETIME) e buscar link a partir da próxima data"""
 
 
