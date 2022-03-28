@@ -1,7 +1,7 @@
-from email.header import Header
 import pandas as pd
 import os
 from datetime import datetime, timedelta
+from FXaddsep import AddSeparator
 
 url_download = "/ptax_internet/consultaBoletim.do?method=gerarCSVFechamentoMoedaNoPeriodo&ChkMoeda=61&DATAINI=08/02/2022&DATAFIM=07/03/2022"
 url_base = url_download.split('ChkMoeda')[0]
@@ -24,7 +24,6 @@ if os.path.isfile(f'./Cotacoes{curr_name}2022.csv'):
     dt_final = datetime.strftime(datetime.now() - timedelta(1), '%d/%m/%Y')
     cur_csvnew = f'https://ptax.bcb.gov.br{url_base}ChkMoeda={currency}&DATAINI={dt_inicio}&DATAFIM={dt_final}'
     readnewfile_df = pd.read_csv(cur_csvnew, header= None, sep= ';')
-    
     readnewfile_df.to_csv(f'./Cotacoes{curr_name}2022.csv', mode= 'a', sep= ';', index= False, header= False)
 
     """Próximo passo criar .csv caso ele não exista"""
@@ -37,7 +36,7 @@ else:
     readnewfile_df = pd.read_csv(cur_csvnew, header= None, sep= ';', names= ['Data', 'Codigo da moeda', 'Nao sei', 'Moeda', 'Taxa compra', 'Taxa venda', 'Paridade dolar compra', 'Paridade dolar venda'])
     readnewfile_df.to_csv(f'./Cotacoes{curr_name}2022.csv', sep= ';', index= False, header= True)
 
-    
+AddSeparator(curr_name).addSep()
     
     
     #print('File does not exist')
@@ -49,10 +48,5 @@ else:
 #cur_csv = f'https://ptax.bcb.gov.br{url_base}ChkMoeda={currency}&DATAINI={dt_inicio}&DATAFIM={dt_final}'
 #readfile_df = pd.read_csv(cur_csv, header= None, sep= ';')
 #print(readfile_df)
-
-"""Próximos passos"""
-"""1- verificar se há base existente 'CotacoesEuro2022' """ """OK"""
-"""2- criar base manualmente"""
-"""3- rodar script todo e colar dados adicionais na base"""
 
 
